@@ -13,7 +13,7 @@ class AccountController{
             if (password === confirmedPassword) {
                 Account.create({ userName: userName, password: hashedPassword })
                     .then(() => {
-                        res.send('Created')
+                        res.send('Created account successfully!')
                     })
                     .catch(() => {
                         res.send('UserName is existed');
@@ -26,21 +26,24 @@ class AccountController{
         }
 
     }
-    //POST/account/logIn
+    //POST/account/logIn    
     async logIn(req, res,next) {
         const _userName = req.body.userName; 
         const _password = req.body.password; 
-        const user = await Account.find({ userName: _userName}).exec();
-        if (user) {
-            return res.status(400).send('Can\' find username ');
+        const user = await Account.findOne({ userName: _userName});
+        if (!user) {
+            return res.status(400).send('Can\' find user ');
         }
         try {
-            if (bcrypt.compare(_password, user.password)) {
-                res.send('Succcess');
+            const isMatched = await bcrypt.compare(_password, user.password);
+            if (isMatched) {
+                res.send('Succcess. You are now logged in!');
+            } else {
+                res.send('Incorrect password');
             }
          }
         catch {
-            res.send('Incorrect password')
+            res.status(500).send();
         };
     }
 }
