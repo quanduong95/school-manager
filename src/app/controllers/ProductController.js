@@ -19,7 +19,7 @@ class ProductController{
     }
     //GET /product/create
     create(req, res, next) {
-        res.render('productsRelated/createProduct')
+        res.send();
     }
     //POST /product/store
     store(req, res, next) {

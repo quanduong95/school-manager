@@ -1,8 +1,18 @@
 const bcrypt = require('bcrypt');
 const Account = require('../models/Account');
+const jwt = require('jsonwebtoken');
 class AccountController{
-    
-    //POST/account/register
+    //GET /accounts/signin
+    signIn(req, res) {
+        res.render('sign-in');
+    }
+
+    //GET /accounts/signup
+    signUp(req,res) {
+        res.render('sign-up');
+    }
+
+    //POST api/accounts/register
     async register(req, res,next) {
         try {
             
@@ -26,24 +36,40 @@ class AccountController{
         }
 
     }
-    //POST/account/logIn    
+    //POST api/accounts/signIn    
     async logIn(req, res,next) {
-        const _userName = req.body.userName; 
-        const _password = req.body.password; 
-        const user = await Account.findOne({ userName: _userName});
+        const { username, password } = req.body;
+        const user = await Account.findOne({ userName: username },);
         if (!user) {
-            return res.status(400).send('Can\' find user ');
+            return {
+                message: 'User not found',
+                status: 'userNotFound'
+
+            };
         }
         try {
-            const isMatched = await bcrypt.compare(_password, user.password);
+            const isMatched = await bcrypt.compare(password, user.password);
+            const token = jwt.sign({ id: user._id }, 'token');
             if (isMatched) {
-                res.send('Succcess. You are now logged in!');
+                return {
+                    message: 'Logged in successfully',
+                    status: 'passed',
+                    token: token,
+                }
             } else {
-                res.send('Incorrect password');
+                return {
+                    message: 'Incorrect password',
+                    status: 'failed'
+                
+                }
             }
          }
-        catch {
-            res.status(500).send();
+        catch(error) {
+            return {
+                message: error,
+                status: 'failed'
+            
+            }
         };
     }
 }

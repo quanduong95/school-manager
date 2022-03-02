@@ -4,7 +4,7 @@ class HomeController{
     
     //GET /
     index(req, res) {
-        res.render('home/home');
+        res.render('home');
     }
 }
 

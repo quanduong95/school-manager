@@ -4,13 +4,10 @@ const router = express.Router();
 const AccountController = require('../app/controllers/AccountController')
 
 
-//register a new account
-router.post('/register', AccountController.register);
-
-//log in
-router.post('/login', AccountController.logIn);
-
-
+router.get('/signin', AccountController.signIn);
+router.post('/signin', AccountController.logIn);
+router.get('/signup', AccountController.signUp);
+router.post('/signup', AccountController.register);
 
 
 
