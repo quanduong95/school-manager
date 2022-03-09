@@ -1,0 +1,14 @@
+
+
+
+.nav-item {
+    margin-right: 10px;
+    font-weight: 600;
+}
+#login-btn{
+    margin-left: 8px;
+    background-color: red;
+    color: white;
+    border: none;
+    
+}

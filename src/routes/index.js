@@ -1,12 +1,14 @@
-const productsRouter = require('./products');
-const accountsRouter = require('./accounts');
+const userRouter = require('./user');
+const studentRouter = require('./student');
+const courseRouter = require('./course');
 
-const homeRouter = require('./home');
 
 
 function route(app) {
-    app.use('/products', productsRouter);
-    app.use('/accounts', accountsRouter);
-    app.use('/', homeRouter);
+    app.use('/user', userRouter);
+    app.use('/student', studentRouter);
+    app.use('/course', courseRouter);
+
+    
 }
 module.exports = route;
