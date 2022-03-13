@@ -1,13 +1,18 @@
-
-const Course = require('../models/Course');
+const mongoose = require('mongoose');
 const Teacher = require('../models/Teacher');
+const Course = require('../models/Course');
 
 
 class CourseController{
     //[GET] all students
     async getAll(req, res) {
-        let courses = await Course.find({});
-        console.log(courses);
+        let course = await Course.find({})
+            .populate({
+                path: "teacher",
+                model: "Teacher"
+            });
+
+        console.log(course);
         res.send();
     }
     
