@@ -52,11 +52,13 @@ class UserController{
         try {
             const isMatched = await bcrypt.compare(password, user.password);
             if (isMatched) {
-                const token = jwt.sign({ userName }, 'aaa', { expiresIn: '3s' });
+                const token = jwt.sign({ userName }, tokenSecretKey, { expiresIn: expiresIn });
+                const id = user.id;
                 return res.json({
                     message: 'Logged in successfully', 
                     status: 200,
                     token,
+                    id,
                 });
             } else {
                 return res.json({

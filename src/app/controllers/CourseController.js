@@ -6,14 +6,8 @@ const Course = require('../models/Course');
 class CourseController{
     //[GET] all students
     async getAll(req, res) {
-        let course = await Course.find({})
-            .populate({
-                path: "teacher",
-                model: "Teacher"
-            });
-
-        console.log(course);
-        res.send();
+        let course = await Course.find({});
+        res.json(course);
     }
     
 }

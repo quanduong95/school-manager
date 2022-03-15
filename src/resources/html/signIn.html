@@ -49,11 +49,11 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="button" id="submitBtn" class="btn btn-primary btn-lg">Sign In</button>
                     </div>
-                    
+
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="button" id="toGoogleBtn" class="btn btn-primary btn-lg"> Sign In With
                         Google</button>
@@ -100,16 +100,17 @@
       axios.post('http://localhost:9000/user/signin', {
         userName,
         password,
-        
+
       })
         .then(function (response) {
-          if(response.data.status == 200){
-          alert(response.data.message);
-          window.location.href = './afterLoggedIn.html';
-          window.localStorage.setItem('token', JSON.stringify(response.data.token));
-        }else{
+          if (response.data.status == 200) {
             alert(response.data.message);
-        }
+            window.location.href = './search.html';
+            window.localStorage.setItem('token', JSON.stringify(response.data.token));
+            window.localStorage.setItem('id', JSON.stringify(response.data.id));
+          } else {
+            alert(response.data.message);
+          }
         });
     }
 
